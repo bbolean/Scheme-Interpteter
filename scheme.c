@@ -1,11 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
 #include <readline/readline.h>
 #include <readline/history.h>
 
 #include "constants.h"
+#include "command.h"
+#include "tools.h"
+
+void execute_constant(char *command);
+void execute_command(char *command);
 
 /* main running program. Receives scheme commands
  * and executes them.
@@ -24,6 +30,10 @@ int main(int argc,char **argv)
 		if(*command != '(')
 		{	
 			execute_constant(command);
+		}
+		else
+		{
+			execute_command(command);
 		}
 	}
 
@@ -53,6 +63,35 @@ void execute_constant(char *command)
 	if(is_real(command)) printf("real number %f\n",get_real(command));
 
 	/* check if command is rational */
-	if(is_rational(command)) printf("rational number %s\n", command); 
+	if(is_rational(command)) {
+		int nominator = get_nominator(command);
+		int denominator = get_denominator(command);
+		int g = gcd(nominator,denominator);
 
+		if(g < denominator)
+			printf("rational number %d / %d \n", nominator / g, denominator / g);
+		else printf("rational number %d\n", nominator / g);
+	}
+
+	/* check if command is list */
+	if(is_list(command)) printf("list %s\n", (++command));
+
+}
+
+void execute_command(char *command)
+{
+	/* skip '(' character*/
+	command++;
+
+	/* check if command is car */
+	if(strncmp(command,"car",3) == 0)
+	{
+		execute_car(command);
+	}
+
+	/* check if command is cdr */
+	if(strncmp(command,"cdr",3) == 0)
+	{
+		execute_cdr(command);
+	}
 }

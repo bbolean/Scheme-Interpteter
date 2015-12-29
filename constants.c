@@ -118,3 +118,55 @@ bool is_rational(char *rational)
 	if(num_slashes == 1) return true;
 	return false;
 }
+
+/* Function: get_nominator(char *rational)
+ * Takes one argument of type a / b, and returns
+ * integer value of a
+ */
+int get_nominator(char *rational)
+{
+	int rest = 0;
+	/* evaluate value before '/' character */
+	while(*rational != '/')
+	{
+		rest *= 10;
+		rest += *rational - '0';
+		rational++;
+	}
+
+	return rest;
+}
+
+/* Function: get_denominator(char *rational)
+ * Takes one argument of type a / b, and returns
+ * integer value of b 
+ */
+int get_denominator(char *rational)
+{	
+	/* skip everything before '/' character */
+	while(*rational != '/') rational++;
+	/* skip '/' character */
+	rational++;
+
+	/* evaluate denominator */
+	int rest = 0;
+	while(*rational != '\0')
+	{
+		rest *= 10;
+		rest += *rational - '0';
+		rational++;
+	}
+
+	return rest;
+}
+
+/* Function: is_list(char *command)
+ * Takes one argument and checks whether it 
+ * contains list or not. Since is cheme list
+ * starts with " ' " we only check this feature 
+ */
+bool is_list(char *command)
+{
+	if(*command == '\'') return true;
+	return false;
+}
