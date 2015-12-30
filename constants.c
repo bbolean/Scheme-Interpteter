@@ -10,7 +10,7 @@
 bool is_integer(char *number)
 {	
 	
-	while(*number != '\0')
+	while(*number != '\0' && *number != ' ')
 	{
 		if(*number < '0' || *number > '9') return false;
 
@@ -29,7 +29,7 @@ int get_int(char *number)
 	/* keep result in this variable */
 	int rest = 0;
 
-	while(*number != '\0')
+	while(*number != '\0' && *number != ' ')
 	{	
 		rest *= 10;
 		rest += *number - '0';
@@ -51,7 +51,7 @@ bool is_real(char *real)
 
 	/* check if number consists of only digits and exactly 
 	 * one dot */
-	while(*real != '\0')
+	while(*real != '\0' && *real != ' ')
 	{	
 		if(*real == '.')
 			num_dots++;
@@ -87,7 +87,7 @@ double get_real(char *real)
 	/* denominator of number */
 	double power = 10;
 
-	while(*real != '\0')
+	while(*real != '\0' && *real != ' ')
 	{	
 		double curr_val = *real - '0';
 		after_dot += curr_val / power;
@@ -107,7 +107,7 @@ bool is_rational(char *rational)
 {
 	int num_slashes = 0;
 
-	while(*rational != '\0')
+	while(*rational != '\0' && *rational != ' ')
 	{
 		if(*rational == '/') num_slashes++;
 		else if(*rational < '0' || *rational > '9') return false;
@@ -150,7 +150,7 @@ int get_denominator(char *rational)
 
 	/* evaluate denominator */
 	int rest = 0;
-	while(*rational != '\0')
+	while(*rational != '\0' && *rational != ' ')
 	{
 		rest *= 10;
 		rest += *rational - '0';
